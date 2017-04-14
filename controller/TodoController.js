@@ -25,9 +25,30 @@ var TodoController = function(Todo) {
         });
     };
 
+    var addComment = function(req, res) {
+        Todo.findById(req.params.id, function (error, todo) {
+            if(!error){
+                todo.comments.push(req.body);
+                todo.update(function (error) {
+                    if(!error){
+                        res.status(201);
+                        res.send(todo);
+                    } else {
+                        res.status(400);
+                        res.send({error: "Bad request"});
+                    }
+                })
+            } else {
+                res.status(404);
+                res.send({error: "Record not found"})
+            }
+        })
+    };
+
     return {
         get: get,
-        create: add
+        create: add,
+        addComment: addComment
     }
 };
 

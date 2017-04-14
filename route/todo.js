@@ -9,4 +9,8 @@ todoRouter.route('')
     .post(todoController.create)
 ;
 
+todoRouter.route('/:id/comments')
+    .post(todoController.addComment)
+;
+
 module.exports = todoRouter;
